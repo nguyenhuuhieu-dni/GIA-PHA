@@ -441,6 +441,10 @@
             document.head.appendChild(fallbackXlsx);
         }
     </script>
+
+    <!-- GOOGLE FIREBASE SDK (ĐỒNG BỘ ĐÁM MÂY THỜI GIAN THỰC) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 </head>
 <body class="w-full h-full flex flex-col">
 
@@ -454,6 +458,11 @@
         <header class="relative px-2 sm:px-4 md:px-6 py-2 md:py-2.5 bg-gradient-to-b from-[#FFFDF9] via-[#FAF5EE] to-[#EFE5CC] border-b border-[#D4AF37] flex-shrink-0 select-none overflow-hidden">
             <!-- CỤM QUẢN TRỊ VIÊN & ĐĂNG NHẬP Ở GÓC TRÊN BÊN PHẢI -->
             <div id="headerAuthArea" class="no-print absolute top-2 right-3 z-30 flex items-center gap-1.5 select-none">
+                <!-- Huy hiệu trạng thái đám mây -->
+                <span id="cloudStatusBadge" class="text-[10px] sm:text-[11px] px-2 py-0.5 rounded font-bold flex items-center gap-1 bg-emerald-50 text-emerald-800 border border-emerald-300 shadow-2xs" title="Đã kết nối đám mây Google Firebase - Tự động đồng bộ thời gian thực">
+                    <i class="fa-solid fa-cloud text-emerald-600"></i> <span class="hidden sm:inline">Đám mây:</span> Kết nối
+                </span>
+
                 <!-- Nút dành cho Khách / Thành viên (Khi chưa đăng nhập) -->
                 <button id="btnOpenLoginModal" onclick="openAdminLoginModal()" class="viewer-only text-[11px] sm:text-xs bg-parchment hover:bg-goldBright/30 border border-bronzeGold text-amber-950 font-bold px-2.5 py-1 rounded flex items-center gap-1.5 shadow-xs transition" title="Đăng nhập dành cho Quản trị viên dòng tộc để chỉnh sửa">
                     <i class="fa-solid fa-shield-halved text-amber-700"></i> <span>Quản Trị</span>
@@ -1705,6 +1714,111 @@
         }
 
         // =========================================================================
+        // GOOGLE FIREBASE CLOUD FIRESTORE (ĐỒNG BỘ ĐÁM MÂY THỜI GIAN THỰC)
+        // =========================================================================
+        const firebaseConfig = {
+            apiKey: "AIzaSyD53Yj-X4KZz-waX18bDrSrucZ0b7VXuq4",
+            authDomain: "gia-pha-3644e.firebaseapp.com",
+            projectId: "gia-pha-3644e",
+            storageBucket: "gia-pha-3644e.firebasestorage.app",
+            messagingSenderId: "77307158701",
+            appId: "1:77307158701:web:5336a86787c4c3d7802624",
+            measurementId: "G-QXS0ZTFHGG"
+        };
+
+        let firebaseApp = null;
+        let firebaseDb = null;
+        let isCloudConnected = false;
+        let isSyncingFromCloud = false;
+
+        function initFirebaseCloud() {
+            try {
+                if (typeof firebase !== 'undefined' && firebase.initializeApp) {
+                    if (!firebase.apps || firebase.apps.length === 0) {
+                        firebaseApp = firebase.initializeApp(firebaseConfig);
+                    } else {
+                        firebaseApp = firebase.apps[0];
+                    }
+                    firebaseDb = firebase.firestore();
+                    isCloudConnected = true;
+                    updateCloudStatusBadge('connected');
+                    listenToCloudUpdates();
+                } else {
+                    console.warn('Firebase SDK chưa được tải, sử dụng dữ liệu cục bộ.');
+                    updateCloudStatusBadge('offline');
+                }
+            } catch (err) {
+                console.warn('Lỗi kết nối Firebase Cloud:', err);
+                updateCloudStatusBadge('offline');
+            }
+        }
+
+        function updateCloudStatusBadge(status) {
+            const badge = document.getElementById('cloudStatusBadge');
+            if (!badge) return;
+            if (status === 'connected') {
+                badge.className = 'text-[10px] sm:text-[11px] px-2 py-0.5 rounded font-bold flex items-center gap-1 bg-emerald-50 text-emerald-800 border border-emerald-300 shadow-2xs';
+                badge.innerHTML = '<i class="fa-solid fa-cloud text-emerald-600"></i> <span class="hidden sm:inline">Đám mây:</span> Đã kết nối';
+                badge.title = 'Đã kết nối cơ sở dữ liệu Google Cloud Firestore - Đồng bộ thời gian thực cho cả họ';
+            } else if (status === 'syncing') {
+                badge.className = 'text-[10px] sm:text-[11px] px-2 py-0.5 rounded font-bold flex items-center gap-1 bg-blue-50 text-blue-800 border border-blue-300 shadow-2xs';
+                badge.innerHTML = '<i class="fa-solid fa-arrows-rotate text-blue-600 fa-spin"></i> <span class="hidden sm:inline">Đám mây:</span> Đang lưu...';
+                badge.title = 'Đang đồng bộ dữ liệu mới lên đám mây...';
+            } else if (status === 'offline') {
+                badge.className = 'text-[10px] sm:text-[11px] px-2 py-0.5 rounded font-bold flex items-center gap-1 bg-amber-50 text-amber-800 border border-amber-300 shadow-2xs';
+                badge.innerHTML = '<i class="fa-solid fa-hard-drive text-amber-600"></i> <span class="hidden sm:inline">Chế độ:</span> Cục bộ';
+                badge.title = 'Đang sử dụng dữ liệu cục bộ trên máy';
+            }
+        }
+
+        function listenToCloudUpdates() {
+            if (!firebaseDb) return;
+            firebaseDb.collection('genealogy').doc('data').onSnapshot((doc) => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    if (Array.isArray(data.members) && data.members.length > 0) {
+                        isSyncingFromCloud = true;
+                        members = data.members;
+                        if (data.customTexts) {
+                            customTexts = { ...defaultTexts, ...data.customTexts };
+                        }
+                        localStorage.setItem(STORAGE_KEY_MEMBERS, JSON.stringify(members));
+                        localStorage.setItem(STORAGE_KEY_TEXTS, JSON.stringify(customTexts));
+                        renderAll();
+                        isSyncingFromCloud = false;
+                        updateCloudStatusBadge('connected');
+                        console.log('Đã đồng bộ dữ liệu mới nhất từ đám mây Google Firestore!');
+                    }
+                } else {
+                    // Chưa có dữ liệu trên Firestore (lần đầu tiên), nạp dữ liệu hiện tại lên đám mây
+                    saveDataToCloud();
+                }
+            }, (err) => {
+                console.warn('Lỗi lắng nghe Firebase (chuyển sang offline):', err);
+                updateCloudStatusBadge('offline');
+            });
+        }
+
+        function saveDataToCloud() {
+            if (isSyncingFromCloud || !firebaseDb) return;
+
+            updateCloudStatusBadge('syncing');
+            const auth = getStoredAuth();
+            firebaseDb.collection('genealogy').doc('data').set({
+                members: members,
+                customTexts: customTexts,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                updatedBy: isAdminLoggedIn ? (auth.username || 'admin') : 'user'
+            }).then(() => {
+                updateCloudStatusBadge('connected');
+                console.log('Đã lưu thành công lên đám mây Google Firestore!');
+            }).catch((err) => {
+                console.warn('Lỗi lưu Firestore:', err);
+                updateCloudStatusBadge('offline');
+            });
+        }
+
+        // =========================================================================
         // THUẬT TOÁN ÂM LỊCH VIỆT NAM (HO NGOC DUC ALGORITHM)
         // =========================================================================
         const CAN = ["Giáp", "Ất", "Bính", "Đinh", "Mậu", "Kỷ", "Canh", "Tân", "Nhâm", "Quý"];
@@ -2146,6 +2260,7 @@
             checkInitialAdminAuth();
             renderAll();
             initPanAndZoom();
+            initFirebaseCloud();
             window.addEventListener('resize', adjustHoanhPhiFontSize);
             if (document.fonts && document.fonts.ready) {
                 document.fonts.ready.then(() => adjustHoanhPhiFontSize());
@@ -2251,6 +2366,7 @@
         function saveDataToStorage() {
             localStorage.setItem(STORAGE_KEY_MEMBERS, JSON.stringify(members));
             localStorage.setItem(STORAGE_KEY_TEXTS, JSON.stringify(customTexts));
+            saveDataToCloud();
         }
 
         function renderAll() {
