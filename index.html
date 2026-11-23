@@ -948,13 +948,13 @@
 
                         <!-- Số Điện Thoại Chồng -->
                         <div>
-                            <label class="block font-semibold text-gray-700 mb-1"><i class="fa-solid fa-phone text-emerald-700 text-xs"></i> Số Điện Thoại (Chồng)</label>
+                            <label id="lblMemberPhone" class="block font-semibold text-gray-700 mb-1"><i class="fa-solid fa-phone text-emerald-700 text-xs"></i> Số Điện Thoại</label>
                             <input type="text" id="formMemberPhone" placeholder="Ví dụ: 0912.345.678" class="w-full bg-white border border-gray-300 rounded p-1.5">
                         </div>
 
                         <!-- Năm Sinh Chồng -->
                         <div>
-                            <label class="block font-semibold text-gray-700 mb-1">Năm Sinh / Ngày Sinh (Chồng)</label>
+                            <label id="lblMemberBirth" class="block font-semibold text-gray-700 mb-1">Năm Sinh / Ngày Sinh</label>
                             <input type="text" id="formMemberBirth" placeholder="Ví dụ: 1995 hoặc 15/08/1995" oninput="autoConvertDateInput('formMemberBirth', 'hintBirthHusband')" class="w-full bg-white border border-gray-300 rounded p-1.5">
                             <div id="hintBirthHusband" class="text-[11px] text-amber-800 italic mt-0.5 min-h-[16px]"></div>
                         </div>
@@ -974,7 +974,7 @@
                         <!-- KHỐI NHẬP NGÀY MẤT & TÙY CHỌN ÂM/DƯƠNG LỊCH (CHỒNG) -->
                         <div id="husbandDeathContainer" class="p-2.5 bg-amber-50/80 rounded border border-amber-300 space-y-2 hidden">
                             <div class="flex items-center justify-between text-xs font-bold text-amber-950">
-                                <span><i class="fa-solid fa-monument text-amber-700"></i> Ngày Mất</span>
+                                <span id="lblMemberDeath"><i class="fa-solid fa-monument text-amber-700"></i> Ngày Mất</span>
                                 <div class="flex items-center gap-3 font-normal">
                                     <label class="flex items-center gap-1 cursor-pointer">
                                         <input type="radio" name="husbandDeathCalendarType" value="solar" id="husbandDeathTypeSolar" checked onchange="updateDeathInputs('Husband')">
@@ -1006,9 +1006,9 @@
                     <div class="p-3.5 bg-pink-50/40 border-2 border-pink-900/20 rounded-lg space-y-3 flex flex-col justify-between">
                         <div class="space-y-3">
                             <div class="flex items-center justify-between border-b border-pink-900/20 pb-1.5 text-pink-950 font-bold font-serif text-sm">
-                                <span id="lblSpouseColHeader" class="flex items-center gap-1.5"><i class="fa-solid fa-venus text-pink-700"></i> THÔNG TIN PHỐI NGẪU</span>
-                                <button type="button" onclick="addNewSpouseTab()" class="text-xs bg-pink-100 hover:bg-pink-200 border border-pink-400 text-pink-900 px-2 py-0.5 rounded font-sans font-bold flex items-center gap-1 shadow-2xs transition" title="Thêm vợ 2 (bà Hai), vợ 3 (bà Ba)...">
-                                    <i class="fa-solid fa-plus text-[10px]"></i> Thêm Vợ/Chồng
+                                <span id="lblSpouseColHeader" class="flex items-center gap-1.5"><i class="fa-solid fa-venus text-pink-700"></i> THÔNG TIN VỢ</span>
+                                <button type="button" id="btnAddNewSpouse" onclick="addNewSpouseTab()" class="text-xs bg-pink-100 hover:bg-pink-200 border border-pink-400 text-pink-900 px-2 py-0.5 rounded font-sans font-bold flex items-center gap-1 shadow-2xs transition" title="Thêm vợ 2 (bà Hai), vợ 3 (bà Ba)... hoặc thêm chồng">
+                                    <i class="fa-solid fa-plus text-[10px]"></i> Thêm Vợ
                                 </button>
                             </div>
 
@@ -1020,14 +1020,12 @@
                             <!-- DANH XƯNG / VAI VẾ -->
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                                 <div>
-                                    <label class="block text-[11px] font-bold text-pink-950 mb-0.5">Danh Xưng / Vai Vế</label>
+                                    <label id="lblSpouseRoleSelect" class="block text-[11px] font-bold text-pink-950 mb-0.5">Danh Xưng / Vai Vế</label>
                                     <select id="formSpouseRoleTitle" onchange="onSpouseRoleChange()" class="w-full bg-white border border-pink-300 rounded p-1.5 text-xs font-bold text-pink-900">
                                         <option value="Bà Cả (Chính thất)">Bà Cả (Chính thất)</option>
                                         <option value="Bà Hai (Kế thất)">Bà Hai (Kế thất)</option>
                                         <option value="Bà Ba (Thứ thất)">Bà Ba (Thứ thất)</option>
                                         <option value="Bà Tư">Bà Tư</option>
-                                        <option value="Chồng trước">Chồng trước</option>
-                                        <option value="Chồng sau">Chồng sau</option>
                                         <option value="custom">Tự nhập khác...</option>
                                     </select>
                                 </div>
@@ -1057,7 +1055,7 @@
 
                         <!-- Họ và Tên Vợ -->
                         <div>
-                            <label class="block font-bold text-pink-950 mb-1">Họ và Tên Vợ</label>
+                            <label id="lblSpouseName" class="block font-bold text-pink-950 mb-1">Họ và Tên Vợ</label>
                             <input type="text" id="formMemberSpouse" placeholder="Ví dụ: Lê Thị Mai..." class="w-full bg-white border border-bronzeGold rounded p-2 font-bold text-pink-900 text-base focus:ring-2 focus:ring-pink-700">
                         </div>
 
@@ -1072,13 +1070,13 @@
 
                         <!-- Số Điện Thoại Vợ -->
                         <div>
-                            <label class="block font-semibold text-gray-700 mb-1"><i class="fa-solid fa-phone text-emerald-700 text-xs"></i> Số Điện Thoại (Vợ)</label>
+                            <label id="lblSpousePhone" class="block font-semibold text-gray-700 mb-1"><i class="fa-solid fa-phone text-emerald-700 text-xs"></i> Số Điện Thoại (Vợ)</label>
                             <input type="text" id="formMemberSpousePhone" placeholder="Ví dụ: 0988.123.456" class="w-full bg-white border border-gray-300 rounded p-1.5">
                         </div>
 
                         <!-- Năm Sinh Vợ -->
                         <div>
-                            <label class="block font-semibold text-gray-700 mb-1">Năm Sinh / Ngày Sinh (Vợ)</label>
+                            <label id="lblSpouseBirth" class="block font-semibold text-gray-700 mb-1">Năm Sinh / Ngày Sinh (Vợ)</label>
                             <input type="text" id="formMemberSpouseBirth" placeholder="Ví dụ: 1998 hoặc 20/10/1998" oninput="autoConvertDateInput('formMemberSpouseBirth', 'hintBirthWife')" class="w-full bg-white border border-gray-300 rounded p-1.5">
                             <div id="hintBirthWife" class="text-[11px] text-amber-800 italic mt-0.5 min-h-[16px]"></div>
                         </div>
@@ -1098,7 +1096,7 @@
                         <!-- KHỐI NHẬP NGÀY MẤT & TÙY CHỌN ÂM/DƯƠNG LỊCH (VỢ) -->
                         <div id="wifeDeathContainer" class="p-2.5 bg-amber-50/80 rounded border border-amber-300 space-y-2 hidden">
                             <div class="flex items-center justify-between text-xs font-bold text-amber-950">
-                                <span><i class="fa-solid fa-monument text-amber-700"></i> Ngày Mất (Vợ)</span>
+                                <span id="lblSpouseDeath"><i class="fa-solid fa-monument text-amber-700"></i> Ngày Mất (Vợ)</span>
                                 <div class="flex items-center gap-3 font-normal">
                                     <label class="flex items-center gap-1 cursor-pointer">
                                         <input type="radio" name="wifeDeathCalendarType" value="solar" id="wifeDeathTypeSolar" checked onchange="updateDeathInputs('Wife')">
@@ -2570,6 +2568,62 @@
         // =========================================================================
         // DỰNG CÂY PHẢ HỆ: TÊN GỌN TRÊN 1 HÀNG & TỪ AN KHANG THANH NHÃ
         // =========================================================================
+        // HÀM XÁC ĐỊNH NGÀY/NĂM SINH & TỰ ĐỘNG SẮP XẾP CON TỪ LỚN TỚI BÉ (TRÁI QUA PHẢI)
+        // =========================================================================
+        function parseBirthDateValue(birthStr) {
+            if (!birthStr || typeof birthStr !== 'string') return 99999999;
+            const str = birthStr.trim();
+            if (!str) return 99999999;
+
+            // Định dạng dd/mm/yyyy hoặc d/m/yyyy hoặc dd-mm-yyyy
+            const dmyMatch = str.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})/);
+            if (dmyMatch) {
+                const d = parseInt(dmyMatch[1], 10);
+                const m = parseInt(dmyMatch[2], 10);
+                const y = parseInt(dmyMatch[3], 10);
+                return y * 10000 + m * 100 + d;
+            }
+
+            // Định dạng mm/yyyy
+            const myMatch = str.match(/(\d{1,2})[\/\-](\d{4})/);
+            if (myMatch) {
+                const m = parseInt(myMatch[1], 10);
+                const y = parseInt(myMatch[2], 10);
+                return y * 10000 + m * 100 + 1;
+            }
+
+            // 4 chữ số năm (ví dụ: 1969, khoảng 1950, năm 1945)
+            const yearMatch = str.match(/\b(1[6-9]\d{2}|20\d{2})\b/);
+            if (yearMatch) {
+                const y = parseInt(yearMatch[1], 10);
+                return y * 10000 + 101; // Mặc định ngày 1 tháng 1
+            }
+
+            // Bất kỳ chuỗi 4 số nào
+            const any4 = str.match(/\d{4}/);
+            if (any4) {
+                return parseInt(any4[0], 10) * 10000 + 101;
+            }
+
+            return 99999999;
+        }
+
+        function sortMembersByBirth(memberList) {
+            if (!Array.isArray(memberList) || memberList.length <= 1) return memberList || [];
+            return [...memberList].sort((a, b) => {
+                const valA = parseBirthDateValue(a.birth);
+                const valB = parseBirthDateValue(b.birth);
+                if (valA !== valB) return valA - valB;
+                // Nếu cùng ngày/năm sinh hoặc chưa có thông tin, giữ nguyên vị trí trong danh sách
+                const idxA = members.indexOf(a);
+                const idxB = members.indexOf(b);
+                return idxA - idxB;
+            });
+        }
+
+        // =========================================================================
+        // DỰNG CÂY PHẢ HỆ: TÊN GỌN TRÊN 1 HÀNG & TỪ AN KHANG THANH NHÃ
+        // =========================================================================
         function renderTreeView() {
             const container = document.getElementById('treeContainer');
             container.innerHTML = '';
@@ -2579,6 +2633,7 @@
                 const minGen = Math.min(...members.map(m => m.gen));
                 rootMembers = members.filter(m => m.gen === minGen);
             }
+            rootMembers = sortMembersByBirth(rootMembers);
 
             if (rootMembers.length === 0) {
                 container.innerHTML = `
@@ -2608,16 +2663,29 @@
         }
 
         
-        // LẤY DANH SÁCH TẤT CẢ PHỐI NGẪU (HỖ TRỢ ĐA THÊ: BÀ CẢ, BÀ HAI, BÀ BA...)
+        // LẤY DANH SÁCH TẤT CẢ PHỐI NGẪU (HỖ TRỢ ĐA THÊ: BÀ CẢ, BÀ HAI, BÀ BA... HOẶC CHỒNG)
         function getMemberSpouses(member) {
             if (!member) return [];
+            const isFemale = (getMemberGender(member) === 'female');
             if (Array.isArray(member.spouses) && member.spouses.length > 0) {
-                return member.spouses;
+                return member.spouses.map((s, idx) => {
+                    let roleTitle = s.roleTitle;
+                    if (isFemale) {
+                        if (!roleTitle || roleTitle.includes('Bà') || roleTitle.includes('Vợ') || roleTitle.includes('thất')) {
+                            roleTitle = (idx === 0) ? 'Chồng' : `Chồng ${idx + 1}`;
+                        }
+                    } else {
+                        if (!roleTitle || roleTitle.includes('Chồng')) {
+                            roleTitle = (idx === 0) ? 'Bà Cả (Chính thất)' : (idx === 1 ? 'Bà Hai (Kế thất)' : (idx === 2 ? 'Bà Ba (Thứ thất)' : `Vợ ${idx + 1}`));
+                        }
+                    }
+                    return { ...s, roleTitle };
+                });
             }
             if (member.spouse && member.spouse.trim() !== '') {
                 return [{
                     id: 'sp_1',
-                    roleTitle: 'Bà Cả (Chính thất)',
+                    roleTitle: isFemale ? 'Chồng' : 'Bà Cả (Chính thất)',
                     name: member.spouse,
                     shortName: member.spouseShortName || '',
                     phone: member.spousePhone || '',
@@ -2637,6 +2705,9 @@
             if (event) event.stopPropagation();
             const card = document.getElementById(`card-${memberId}`);
             if (!card) return;
+            const member = members.find(m => m.id === memberId);
+            const isFemale = member ? (getMemberGender(member) === 'female') : false;
+
             card.querySelectorAll('.spouse-pane').forEach((pane, idx) => {
                 if (idx === spouseIndex) {
                     pane.classList.remove('hidden');
@@ -2646,9 +2717,9 @@
             });
             card.querySelectorAll('.spouse-tab-btn').forEach((btn, idx) => {
                 if (idx === spouseIndex) {
-                    btn.className = 'spouse-tab-btn bg-pink-800 text-goldBright font-bold shadow-xs px-1.5 py-0.5 text-[9.5px] rounded-full transition flex items-center gap-1 select-none whitespace-nowrap';
+                    btn.className = `spouse-tab-btn ${isFemale ? 'bg-blue-800 text-white' : 'bg-pink-800 text-goldBright'} font-bold shadow-xs px-1.5 py-0.5 text-[9.5px] rounded-full transition flex items-center gap-1 select-none whitespace-nowrap`;
                 } else {
-                    btn.className = 'spouse-tab-btn bg-white border border-pink-300 text-pink-900 hover:bg-pink-100 px-1.5 py-0.5 text-[9.5px] rounded-full transition flex items-center gap-1 select-none whitespace-nowrap';
+                    btn.className = `spouse-tab-btn ${isFemale ? 'bg-white border border-blue-300 text-blue-900 hover:bg-blue-50' : 'bg-white border border-pink-300 text-pink-900 hover:bg-pink-100'} px-1.5 py-0.5 text-[9.5px] rounded-full transition flex items-center gap-1 select-none whitespace-nowrap`;
                 }
             });
         }
@@ -2674,50 +2745,129 @@
             const lblMemberAvatar = document.getElementById('lblMemberAvatar');
             const lblMemberPhone = document.getElementById('lblMemberPhone');
             const lblMemberBirth = document.getElementById('lblMemberBirth');
+            const lblMemberDeath = document.getElementById('lblMemberDeath');
             
             const lblSpouseHeader = document.getElementById('lblSpouseColHeader');
-            const lblSpouseSub = document.getElementById('lblSpouseColSub');
+            const btnAddNewSpouse = document.getElementById('btnAddNewSpouse');
+            const lblSpouseRoleSelect = document.getElementById('lblSpouseRoleSelect');
             const lblSpouseName = document.getElementById('lblSpouseName');
             const lblSpouseAvatar = document.getElementById('lblSpouseAvatar');
             const lblSpousePhone = document.getElementById('lblSpousePhone');
             const lblSpouseBirth = document.getElementById('lblSpouseBirth');
+            const lblSpouseDeath = document.getElementById('lblSpouseDeath');
+
+            const formSpouseNameInput = document.getElementById('formMemberSpouse');
+            const formSpouseShortNameInput = document.getElementById('formMemberSpouseShortName');
+            const roleSelect = document.getElementById('formSpouseRoleTitle');
 
             if (isFemale) {
-                if (lblMemberHeader) lblMemberHeader.innerHTML = '<i class="fa-solid fa-venus text-pink-700"></i> THÔNG TIN THÀNH VIÊN (NỮ)';
+                if (lblMemberHeader) lblMemberHeader.innerHTML = '<i class="fa-solid fa-venus text-pink-700"></i> THÔNG TIN VỢ (NỮ NHI)';
                 if (lblMemberSub) lblMemberSub.textContent = 'Nữ Nhi Dòng Họ';
-                if (lblMemberName) lblMemberName.innerHTML = 'Họ và Tên (Nữ) <span class="text-red-500">*</span>';
-                if (lblMemberAvatar) lblMemberAvatar.textContent = 'Ảnh chân dung (Nữ)';
-                if (lblMemberPhone) lblMemberPhone.innerHTML = '<i class="fa-solid fa-phone text-emerald-700 text-xs"></i> Số Điện Thoại (Nữ)';
-                if (lblMemberBirth) lblMemberBirth.textContent = 'Năm Sinh / Ngày Sinh (Nữ)';
+                if (lblMemberName) lblMemberName.innerHTML = 'Họ và Tên Vợ (Nữ) <span class="text-red-500">*</span>';
+                if (lblMemberAvatar) lblMemberAvatar.textContent = 'Ảnh chân dung Vợ (Nữ)';
+                if (lblMemberPhone) lblMemberPhone.innerHTML = '<i class="fa-solid fa-phone text-emerald-700 text-xs"></i> Số Điện Thoại (Vợ)';
+                if (lblMemberBirth) lblMemberBirth.textContent = 'Năm Sinh / Ngày Sinh (Vợ)';
+                if (lblMemberDeath) lblMemberDeath.innerHTML = '<i class="fa-solid fa-monument text-amber-700"></i> Ngày Mất (Vợ)';
 
-                if (lblSpouseHeader) lblSpouseHeader.innerHTML = '<i class="fa-solid fa-mars text-blue-700"></i> THÔNG TIN PHỐI NGẪU (CHỒNG)';
-                if (lblSpouseSub) lblSpouseSub.textContent = 'Chồng (để trống nếu chưa kết hôn)';
+                if (lblSpouseHeader) lblSpouseHeader.innerHTML = '<i class="fa-solid fa-mars text-blue-700"></i> THÔNG TIN CHỒNG';
+                if (btnAddNewSpouse) btnAddNewSpouse.innerHTML = '<i class="fa-solid fa-plus text-[10px]"></i> Thêm Chồng';
+                if (lblSpouseRoleSelect) lblSpouseRoleSelect.textContent = 'Danh Xưng Chồng';
                 if (lblSpouseName) lblSpouseName.innerHTML = 'Họ và Tên Chồng <span class="text-stone-400 font-normal italic text-xs">(để trống nếu chưa kết hôn)</span>';
                 if (lblSpouseAvatar) lblSpouseAvatar.textContent = 'Ảnh chân dung Chồng';
                 if (lblSpousePhone) lblSpousePhone.innerHTML = '<i class="fa-solid fa-phone text-emerald-700 text-xs"></i> Số Điện Thoại Chồng';
                 if (lblSpouseBirth) lblSpouseBirth.textContent = 'Năm Sinh / Ngày Sinh Chồng';
+                if (lblSpouseDeath) lblSpouseDeath.innerHTML = '<i class="fa-solid fa-monument text-amber-700"></i> Ngày Mất (Chồng)';
+                if (formSpouseNameInput) formSpouseNameInput.placeholder = 'Ví dụ: Lê Minh Nhật...';
+                if (formSpouseShortNameInput) formSpouseShortNameInput.placeholder = 'Ví dụ: Lê M. Nhật';
+
+                // Tùy chọn danh xưng cho Chồng
+                if (roleSelect) {
+                    const currentVal = roleSelect.value;
+                    roleSelect.innerHTML = `
+                        <option value="Chồng">Chồng</option>
+                        <option value="Chồng trước">Chồng trước</option>
+                        <option value="Chồng sau">Chồng sau</option>
+                        <option value="custom">Tự nhập khác...</option>
+                    `;
+                    if (!currentVal || currentVal.includes('Bà') || currentVal.includes('Vợ') || currentVal.includes('thất')) {
+                        roleSelect.value = 'Chồng';
+                    } else if (['Chồng', 'Chồng trước', 'Chồng sau'].includes(currentVal)) {
+                        roleSelect.value = currentVal;
+                    } else if (currentVal === 'custom') {
+                        roleSelect.value = 'custom';
+                    } else {
+                        roleSelect.value = 'Chồng';
+                    }
+                }
+
+                // Tự động chuẩn hóa các phối ngẫu sang danh xưng Chồng
+                if (Array.isArray(modalSpouses)) {
+                    modalSpouses.forEach((sp, idx) => {
+                        if (!sp.roleTitle || sp.roleTitle.includes('Bà') || sp.roleTitle.includes('Vợ') || sp.roleTitle.includes('thất')) {
+                            sp.roleTitle = (idx === 0) ? 'Chồng' : `Chồng ${idx + 1}`;
+                        }
+                    });
+                }
             } else {
-                if (lblMemberHeader) lblMemberHeader.innerHTML = '<i class="fa-solid fa-mars text-blue-700"></i> THÔNG TIN THÀNH VIÊN (NAM)';
-                if (lblMemberSub) lblMemberSub.textContent = 'Đinh Nam Dòng Họ';
-                if (lblMemberName) lblMemberName.innerHTML = 'Họ và Tên (Nam) <span class="text-red-500">*</span>';
+                if (lblMemberHeader) lblMemberHeader.innerHTML = '<i class="fa-solid fa-mars text-blue-700"></i> THÔNG TIN CHỒNG (ĐINH NAM)';
+                if (lblMemberSub) lblMemberSub.textContent = 'Đinh Nam / Đại Diện';
+                if (lblMemberName) lblMemberName.innerHTML = 'Họ và Tên Chồng (Nam) <span class="text-red-500">*</span>';
                 if (lblMemberAvatar) lblMemberAvatar.textContent = 'Ảnh chân dung (Nam)';
                 if (lblMemberPhone) lblMemberPhone.innerHTML = '<i class="fa-solid fa-phone text-emerald-700 text-xs"></i> Số Điện Thoại (Nam)';
                 if (lblMemberBirth) lblMemberBirth.textContent = 'Năm Sinh / Ngày Sinh (Nam)';
+                if (lblMemberDeath) lblMemberDeath.innerHTML = '<i class="fa-solid fa-monument text-amber-700"></i> Ngày Mất (Nam)';
 
-                if (lblSpouseHeader) lblSpouseHeader.innerHTML = '<i class="fa-solid fa-venus text-pink-700"></i> THÔNG TIN PHỐI NGẪU (VỢ)';
-                if (lblSpouseSub) lblSpouseSub.textContent = 'Vợ (để trống nếu chưa kết hôn)';
+                if (lblSpouseHeader) lblSpouseHeader.innerHTML = '<i class="fa-solid fa-venus text-pink-700"></i> THÔNG TIN VỢ';
+                if (btnAddNewSpouse) btnAddNewSpouse.innerHTML = '<i class="fa-solid fa-plus text-[10px]"></i> Thêm Vợ';
+                if (lblSpouseRoleSelect) lblSpouseRoleSelect.textContent = 'Danh Xưng / Vai Vế Vợ';
                 if (lblSpouseName) lblSpouseName.innerHTML = 'Họ và Tên Vợ <span class="text-stone-400 font-normal italic text-xs">(để trống nếu chưa kết hôn)</span>';
                 if (lblSpouseAvatar) lblSpouseAvatar.textContent = 'Ảnh chân dung Vợ';
                 if (lblSpousePhone) lblSpousePhone.innerHTML = '<i class="fa-solid fa-phone text-emerald-700 text-xs"></i> Số Điện Thoại Vợ';
                 if (lblSpouseBirth) lblSpouseBirth.textContent = 'Năm Sinh / Ngày Sinh Vợ';
+                if (lblSpouseDeath) lblSpouseDeath.innerHTML = '<i class="fa-solid fa-monument text-amber-700"></i> Ngày Mất (Vợ)';
+                if (formSpouseNameInput) formSpouseNameInput.placeholder = 'Ví dụ: Lê Thị Mai...';
+                if (formSpouseShortNameInput) formSpouseShortNameInput.placeholder = 'Ví dụ: Lê T. Mai';
+
+                // Tùy chọn danh xưng cho Vợ
+                if (roleSelect) {
+                    const currentVal = roleSelect.value;
+                    roleSelect.innerHTML = `
+                        <option value="Bà Cả (Chính thất)">Bà Cả (Chính thất)</option>
+                        <option value="Bà Hai (Kế thất)">Bà Hai (Kế thất)</option>
+                        <option value="Bà Ba (Thứ thất)">Bà Ba (Thứ thất)</option>
+                        <option value="Bà Tư">Bà Tư</option>
+                        <option value="custom">Tự nhập khác...</option>
+                    `;
+                    if (currentVal && currentVal.includes('Chồng')) {
+                        roleSelect.value = 'Bà Cả (Chính thất)';
+                    } else if (['Bà Cả (Chính thất)', 'Bà Hai (Kế thất)', 'Bà Ba (Thứ thất)', 'Bà Tư'].includes(currentVal)) {
+                        roleSelect.value = currentVal;
+                    } else if (currentVal === 'custom') {
+                        roleSelect.value = 'custom';
+                    } else {
+                        roleSelect.value = 'Bà Cả (Chính thất)';
+                    }
+                }
+
+                // Tự động chuẩn hóa các phối ngẫu sang danh xưng Vợ
+                if (Array.isArray(modalSpouses)) {
+                    modalSpouses.forEach((sp, idx) => {
+                        if (!sp.roleTitle || sp.roleTitle.includes('Chồng')) {
+                            sp.roleTitle = (idx === 0) ? 'Bà Cả (Chính thất)' : (idx === 1 ? 'Bà Hai (Kế thất)' : (idx === 2 ? 'Bà Ba (Thứ thất)' : `Vợ ${idx + 1}`));
+                        }
+                    });
+                }
             }
+
+            renderModalSpouseTabs();
         }
 
         function createTreeNode(member) {
             const li = document.createElement('li');
             li.className = 'tree-node-li';
 
-            const children = members.filter(m => m.parentId === member.id);
+            const rawChildren = members.filter(m => m.parentId === member.id);
+            const children = sortMembersByBirth(rawChildren);
             const hasKids = children.length > 0;
             const isCollapsed = collapsedMemberIds.has(member.id);
 
@@ -2959,12 +3109,20 @@
                                 <div>
                                     ${spouses.length > 1 ? `
                                         <!-- THANH TAB CHỌN VỢ / CHỒNG KHI CÓ NHIỀU PHỐI NGẪU -->
-                                        <div class="flex items-center gap-1 mb-1.5 overflow-x-auto pb-0.5 border-b border-pink-900/15">
-                                            ${spouses.map((sp, idx) => `
-                                                <button type="button" onclick="switchCardSpouse('${member.id}', ${idx}, event)" id="spouse-tab-${member.id}-${idx}" class="spouse-tab-btn ${idx === 0 ? 'bg-pink-800 text-goldBright font-bold shadow-xs' : 'bg-white border border-pink-300 text-pink-900 hover:bg-pink-100'} px-1.5 py-0.5 text-[9.5px] rounded-full transition flex items-center gap-1 select-none whitespace-nowrap" title="${escapeHTML(sp.name)}">
-                                                    <span>${escapeHTML(sp.roleTitle ? sp.roleTitle.split(' ')[0] : `Vợ ${idx + 1}`)}</span>: <span class="font-bold">${escapeHTML(sp.shortName || getCompactName(sp.name))}</span>
-                                                </button>
-                                            `).join('')}
+                                        <div class="flex items-center gap-1 mb-1.5 overflow-x-auto pb-0.5 border-b ${isFemale ? 'border-blue-900/15' : 'border-pink-900/15'}">
+                                            ${spouses.map((sp, idx) => {
+                                                let tabTitle = sp.roleTitle ? sp.roleTitle.split(' ')[0] : (isFemale ? `Chồng ${idx + 1}` : `Vợ ${idx + 1}`);
+                                                if (isFemale && (tabTitle.includes('Bà') || tabTitle.includes('Vợ') || tabTitle.includes('thất'))) {
+                                                    tabTitle = (idx === 0) ? 'Chồng' : `Chồng ${idx + 1}`;
+                                                }
+                                                const tabActiveCls = isFemale ? 'bg-blue-800 text-white font-bold shadow-xs' : 'bg-pink-800 text-goldBright font-bold shadow-xs';
+                                                const tabInactiveCls = isFemale ? 'bg-white border border-blue-300 text-blue-900 hover:bg-blue-100' : 'bg-white border border-pink-300 text-pink-900 hover:bg-pink-100';
+                                                return `
+                                                    <button type="button" onclick="switchCardSpouse('${member.id}', ${idx}, event)" id="spouse-tab-${member.id}-${idx}" class="spouse-tab-btn ${idx === 0 ? tabActiveCls : tabInactiveCls} px-1.5 py-0.5 text-[9.5px] rounded-full transition flex items-center gap-1 select-none whitespace-nowrap" title="${escapeHTML(sp.name)}">
+                                                        <span>${escapeHTML(tabTitle)}</span>: <span class="font-bold">${escapeHTML(sp.shortName || getCompactName(sp.name))}</span>
+                                                    </button>
+                                                `;
+                                            }).join('')}
                                         </div>
                                     ` : ''}
 
@@ -2980,7 +3138,16 @@
                                                 <i class="${isFemale ? 'fa-solid fa-mars' : 'fa-solid fa-venus'}"></i>
                                             </div>
                                         `;
-                                        const spRoleText = sp.roleTitle || col2Role;
+                                        let spRoleText = sp.roleTitle || col2Role;
+                                        if (isFemale) {
+                                            if (!spRoleText || spRoleText.includes('Bà') || spRoleText.includes('Vợ') || spRoleText.includes('thất')) {
+                                                spRoleText = (idx === 0) ? 'Chồng' : `Chồng ${idx + 1}`;
+                                            }
+                                        } else {
+                                            if (!spRoleText || spRoleText.includes('Chồng')) {
+                                                spRoleText = (idx === 0) ? 'Bà Cả (Chính thất)' : (idx === 1 ? 'Bà Hai (Kế thất)' : 'Vợ');
+                                            }
+                                        }
 
                                         return `
                                             <div id="spouse-pane-${member.id}-${idx}" class="spouse-pane ${idx === 0 ? '' : 'hidden'} flex flex-col justify-between overflow-hidden">
@@ -3068,10 +3235,14 @@
                                 const spPassed = sp.isPassed;
                                 const spNameColor = spPassed ? "text-black" : (isFemale ? "text-blue-900" : "text-pink-900");
                                 const spDisplayName = sp.shortName || getCompactName(sp.name);
-                                const spBadge = sp.roleTitle ? sp.roleTitle.split(' ')[0] : `Vợ ${idx + 1}`;
+                                let spBadge = sp.roleTitle ? sp.roleTitle.split(' ')[0] : (isFemale ? `Chồng ${idx + 1}` : `Vợ ${idx + 1}`);
+                                if (isFemale && (spBadge.includes('Bà') || spBadge.includes('Vợ') || spBadge.includes('thất'))) {
+                                    spBadge = (idx === 0) ? 'Chồng' : `Chồng ${idx + 1}`;
+                                }
+                                const badgeCls = isFemale ? 'bg-blue-100 text-blue-900' : 'bg-pink-100 text-pink-900';
                                 return `
                                     <div class="flex items-center gap-1.5 min-w-0 pt-0.5 border-t border-bronzeGold/20">
-                                        <span class="text-[8.5px] font-bold px-1 py-0.2 rounded bg-pink-100 text-pink-900 flex-shrink-0">${escapeHTML(spBadge)}</span>
+                                        <span class="text-[8.5px] font-bold px-1 py-0.2 rounded ${badgeCls} flex-shrink-0">${escapeHTML(spBadge)}</span>
                                         <i class="${isFemale ? 'fa-solid fa-mars text-blue-600' : 'fa-solid fa-venus text-pink-600'} text-[10px] flex-shrink-0"></i>
                                         <span class="font-bold text-[12px] font-serif ${spNameColor} truncate flex-1 tracking-tight" title="${escapeHTML(sp.name)}">
                                             ${escapeHTML(spDisplayName)}
@@ -3184,27 +3355,34 @@
             tbody.innerHTML = filtered.map((m, index) => {
                 const parent = members.find(p => p.id === m.parentId);
                 const spouses = getMemberSpouses(m);
+                const isFemale = (getMemberGender(m) === 'female');
+                const memberNameCls = m.isPassed ? 'text-black' : (isFemale ? 'text-pink-900' : 'text-blue-900');
+
                 return `
                     <tr class="hover:bg-amber-50/60 transition">
                         <td class="p-2.5 border border-gray-200 text-center font-bold text-gray-500">${index + 1}</td>
                         <td class="p-2.5 border border-gray-200 font-bold text-crimsonDark">
                             <div class="flex items-center gap-2">
                                 ${m.avatar ? `<img src="${m.avatar}" class="w-7 h-7 rounded-full object-cover">` : ''}
-                                <span class="break-words font-bold font-serif ${m.isPassed ? 'text-black' : 'text-blue-900'}">${escapeHTML(m.name)}</span>
+                                <span class="break-words font-bold font-serif ${memberNameCls}">${escapeHTML(m.name)}</span>
                                 ${m.isPassed ? '<span class="text-[9px] text-white bg-black px-1.5 py-0.5 rounded font-bold">Đã mất</span>' : ''}
                             </div>
                         </td>
-                        <td class="p-2.5 border border-gray-200 text-pink-950 font-medium">
+                        <td class="p-2.5 border border-gray-200 ${isFemale ? 'text-blue-950' : 'text-pink-950'} font-medium">
                             ${spouses.length > 0 ? `
                                 <div class="space-y-1.5">
-                                    ${spouses.map(sp => `
-                                        <div class="flex items-center gap-1.5 flex-wrap">
-                                            ${sp.avatar ? `<img src="${sp.avatar}" class="w-6 h-6 rounded-full object-cover">` : ''}
-                                            <span class="text-[9px] px-1.5 py-0.5 rounded-full font-bold bg-pink-100 text-pink-800 border border-pink-200">${escapeHTML(sp.roleTitle || 'Vợ')}</span>
-                                            <span class="break-words font-bold font-serif ${sp.isPassed ? 'text-black' : 'text-blue-900'}">${escapeHTML(sp.name)}</span>
-                                            ${sp.isPassed ? '<span class="text-[9px] text-white bg-black px-1.5 py-0.5 rounded font-bold">Đã mất</span>' : ''}
-                                        </div>
-                                    `).join('')}
+                                    ${spouses.map(sp => {
+                                        const spRoleCls = isFemale ? 'bg-blue-100 text-blue-900 border-blue-200' : 'bg-pink-100 text-pink-800 border-pink-200';
+                                        const spNameCls = sp.isPassed ? 'text-black' : (isFemale ? 'text-blue-900' : 'text-pink-900');
+                                        return `
+                                            <div class="flex items-center gap-1.5 flex-wrap">
+                                                ${sp.avatar ? `<img src="${sp.avatar}" class="w-6 h-6 rounded-full object-cover">` : ''}
+                                                <span class="text-[9px] px-1.5 py-0.5 rounded-full font-bold ${spRoleCls} border">${escapeHTML(sp.roleTitle || (isFemale ? 'Chồng' : 'Vợ'))}</span>
+                                                <span class="break-words font-bold font-serif ${spNameCls}">${escapeHTML(sp.name)}</span>
+                                                ${sp.isPassed ? '<span class="text-[9px] text-white bg-black px-1.5 py-0.5 rounded font-bold">Đã mất</span>' : ''}
+                                            </div>
+                                        `;
+                                    }).join('')}
                                 </div>
                             ` : '<span class="text-gray-400 italic">-</span>'}
                         </td>
@@ -3216,8 +3394,8 @@
                             ` : '<span class="italic text-stone-400">(Thủy tổ)</span>'}
                         </td>
                         <td class="p-2.5 border border-gray-200 text-stone-700">
-                            ${m.phone ? `<div><i class="fa-solid fa-phone text-[10px] text-blue-600"></i> ${escapeHTML(m.phone)}</div>` : ''}
-                            ${spouses.map(sp => sp.phone ? `<div><i class="fa-solid fa-phone text-[10px] text-pink-600"></i> ${escapeHTML(sp.phone)} <span class="text-[10px] text-pink-700">(${escapeHTML(sp.roleTitle || 'Vợ')})</span></div>` : '').join('')}
+                            ${m.phone ? `<div><i class="fa-solid fa-phone text-[10px] ${isFemale ? 'text-pink-600' : 'text-blue-600'}"></i> ${escapeHTML(m.phone)}</div>` : ''}
+                            ${spouses.map(sp => sp.phone ? `<div><i class="fa-solid fa-phone text-[10px] ${isFemale ? 'text-blue-600' : 'text-pink-600'}"></i> ${escapeHTML(sp.phone)} <span class="text-[10px] ${isFemale ? 'text-blue-700' : 'text-pink-700'}">(${escapeHTML(sp.roleTitle || (isFemale ? 'Chồng' : 'Vợ'))})</span></div>` : '').join('')}
                             ${!m.phone && !spouses.some(sp => sp.phone) ? '-' : ''}
                         </td>
                         <td class="p-2.5 border border-gray-200 text-center text-stone-600">${m.birth || '-'}</td>
@@ -3649,11 +3827,14 @@
             if (modalSpouses.length === 0 || activeModalSpouseIdx >= modalSpouses.length) return;
             const sp = modalSpouses[activeModalSpouseIdx];
 
+            const femaleEl = document.getElementById('genderFemale');
+            const isFemale = femaleEl ? femaleEl.checked : false;
+
             const roleSelect = document.getElementById('formSpouseRoleTitle');
-            let roleTitle = roleSelect ? roleSelect.value : 'Bà Cả (Chính thất)';
+            let roleTitle = roleSelect ? roleSelect.value : (isFemale ? 'Chồng' : 'Bà Cả (Chính thất)');
             if (roleTitle === 'custom') {
                 const customInput = document.getElementById('formCustomSpouseRole');
-                roleTitle = (customInput && customInput.value.trim()) ? customInput.value.trim() : 'Phối ngẫu';
+                roleTitle = (customInput && customInput.value.trim()) ? customInput.value.trim() : (isFemale ? 'Chồng' : 'Vợ');
             }
             sp.roleTitle = roleTitle;
 
@@ -3679,6 +3860,15 @@
             if (index < 0 || index >= modalSpouses.length) return;
             activeModalSpouseIdx = index;
             const sp = modalSpouses[index];
+
+            const femaleEl = document.getElementById('genderFemale');
+            const isFemale = femaleEl ? femaleEl.checked : false;
+
+            if (isFemale && (!sp.roleTitle || sp.roleTitle.includes('Bà') || sp.roleTitle.includes('Vợ') || sp.roleTitle.includes('thất'))) {
+                sp.roleTitle = (index === 0) ? 'Chồng' : `Chồng ${index + 1}`;
+            } else if (!isFemale && (!sp.roleTitle || sp.roleTitle.includes('Chồng'))) {
+                sp.roleTitle = (index === 0) ? 'Bà Cả (Chính thất)' : 'Bà Hai (Kế thất)';
+            }
 
             // Role Title
             const roleSelect = document.getElementById('formSpouseRoleTitle');
@@ -3755,14 +3945,33 @@
                 }
             }
 
+            const femaleEl = document.getElementById('genderFemale');
+            const isFemale = femaleEl ? femaleEl.checked : false;
+
             container.innerHTML = modalSpouses.map((sp, idx) => {
                 const isActive = (idx === activeModalSpouseIdx);
-                const title = sp.roleTitle ? sp.roleTitle.split(' ')[0] : `Vợ ${idx + 1}`;
+                let title = sp.roleTitle || (isFemale ? 'Chồng' : 'Bà Cả');
+                if (isFemale) {
+                    if (title.includes('Bà') || title.includes('Vợ') || title.includes('thất')) {
+                        title = (idx === 0) ? 'Chồng' : `Chồng ${idx + 1}`;
+                        sp.roleTitle = title;
+                    }
+                } else {
+                    if (title.includes('Chồng')) {
+                        title = (idx === 0) ? 'Bà Cả (Chính thất)' : (idx === 1 ? 'Bà Hai (Kế thất)' : `Vợ ${idx + 1}`);
+                        sp.roleTitle = title;
+                    }
+                }
+                const displayBadge = title.replace(/\s*\(.*\)/, '');
                 const nameDisplay = sp.name ? `: ${sp.name}` : '';
+                const iconClass = isFemale ? 'fa-solid fa-mars text-[10px]' : 'fa-solid fa-venus text-[10px]';
+                const activeCls = isFemale ? 'bg-blue-800 text-white border border-blue-900 shadow' : 'bg-pink-800 text-goldBright border border-pink-900 shadow';
+                const inactiveCls = isFemale ? 'bg-white border border-blue-300 text-blue-900 hover:bg-blue-50' : 'bg-white border border-pink-300 text-pink-900 hover:bg-pink-100';
+
                 return `
-                    <button type="button" onclick="switchModalSpouseTab(${idx})" class="px-2.5 py-1 text-xs rounded-full font-bold whitespace-nowrap transition flex items-center gap-1 shadow-2xs ${isActive ? 'bg-pink-800 text-goldBright border border-pink-900 shadow' : 'bg-white border border-pink-300 text-pink-900 hover:bg-pink-100'}">
-                        <i class="fa-solid fa-user-dress text-[10px]"></i>
-                        <span>${escapeHTML(title)}${escapeHTML(nameDisplay)}</span>
+                    <button type="button" onclick="switchModalSpouseTab(${idx})" class="px-2.5 py-1 text-xs rounded-full font-bold whitespace-nowrap transition flex items-center gap-1 shadow-2xs ${isActive ? activeCls : inactiveCls}">
+                        <i class="${iconClass}"></i>
+                        <span>${escapeHTML(displayBadge)}${escapeHTML(nameDisplay)}</span>
                     </button>
                 `;
             }).join('');
@@ -3776,10 +3985,19 @@
 
         function addNewSpouseTab() {
             saveCurrentSpouseFormToState();
-            let defaultTitle = 'Bà Hai (Kế thất)';
-            if (modalSpouses.length === 2) defaultTitle = 'Bà Ba (Thứ thất)';
-            else if (modalSpouses.length === 3) defaultTitle = 'Bà Tư';
-            else if (modalSpouses.length >= 4) defaultTitle = `Vợ ${modalSpouses.length + 1}`;
+            const femaleEl = document.getElementById('genderFemale');
+            const isFemale = femaleEl ? femaleEl.checked : false;
+
+            let defaultTitle = '';
+            if (isFemale) {
+                if (modalSpouses.length === 1) defaultTitle = 'Chồng sau';
+                else defaultTitle = `Chồng ${modalSpouses.length + 1}`;
+            } else {
+                if (modalSpouses.length === 1) defaultTitle = 'Bà Hai (Kế thất)';
+                else if (modalSpouses.length === 2) defaultTitle = 'Bà Ba (Thứ thất)';
+                else if (modalSpouses.length === 3) defaultTitle = 'Bà Tư';
+                else defaultTitle = `Vợ ${modalSpouses.length + 1}`;
+            }
 
             modalSpouses.push({
                 id: 'sp_' + Date.now(),
@@ -3851,6 +4069,7 @@
             toggleHusbandDeathFields();
             updateDeathInputs('Husband');
 
+            document.getElementById('genderMale').checked = true;
             modalSpouses = [{
                 id: 'sp_1',
                 roleTitle: 'Bà Cả (Chính thất)',
@@ -3865,14 +4084,12 @@
                 avatar: ''
             }];
             activeModalSpouseIdx = 0;
-            renderModalSpouseTabs();
+            updateGenderLabels();
             loadSpouseToModalForm(0);
 
             document.getElementById('formMemberGrave').value = '';
             document.getElementById('formMemberBio').value = '';
             document.getElementById('formMemberGen').value = '1';
-            document.getElementById('genderMale').checked = true;
-            updateGenderLabels();
 
             removeAvatar('Husband');
             removeAvatar('Wife');
@@ -3920,12 +4137,12 @@
             
             // Giới tính
             const memberGender = getMemberGender(member);
-            if (memberGender === 'female') {
+            const isFemale = (memberGender === 'female');
+            if (isFemale) {
                 document.getElementById('genderFemale').checked = true;
             } else {
                 document.getElementById('genderMale').checked = true;
             }
-            updateGenderLabels();
             
             // Chồng / Thành viên chính
             document.getElementById('formMemberName').value = member.name || '';
@@ -3965,12 +4182,12 @@
                 removeAvatar('Husband');
             }
 
-            // Danh sách Vợ / Phối ngẫu
+            // Danh sách Vợ / Chồng
             modalSpouses = getMemberSpouses(member).map(s => ({ ...s }));
             if (modalSpouses.length === 0) {
                 modalSpouses = [{
                     id: 'sp_1',
-                    roleTitle: 'Bà Cả (Chính thất)',
+                    roleTitle: isFemale ? 'Chồng' : 'Bà Cả (Chính thất)',
                     name: '',
                     shortName: '',
                     phone: '',
@@ -3983,7 +4200,7 @@
                 }];
             }
             activeModalSpouseIdx = 0;
-            renderModalSpouseTabs();
+            updateGenderLabels();
             loadSpouseToModalForm(0);
 
             // Chung
